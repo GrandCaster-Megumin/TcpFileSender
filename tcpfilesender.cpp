@@ -25,7 +25,7 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     mainLayout->addSpacing(10);
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
-    setWindowTitle(QStringLiteral("檔案傳送"));
+    setWindowTitle(QStringLiteral("傳送檔案"));
     connect(openButton,SIGNAL(clicked()), this, SLOT(openFile()));
     connect(startButton, SIGNAL(clicked()), this, SLOT(start()));
     connect(&tcpClient, SIGNAL(connected()), this, SLOT(startTransfer()));
