@@ -12,6 +12,11 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     startButton = new QPushButton(QStringLiteral("開始"));
     quitButton = new QPushButton(QStringLiteral("退出"));
     openButton = new QPushButton(QStringLiteral("開檔"));
+    QFormLayout *formLayout = new QFormLayout;
+    lineEdit = new QLineEdit;
+    hostLabel = new QLabel(QStringLiteral("IP:"));
+    portLabel = new QLabel(QStringLiteral("Port:"));
+    lineEdit2 = new QLineEdit;
     startButton->setEnabled(false);
     buttonBox = new QDialogButtonBox;
     buttonBox->addButton(startButton, QDialogButtonBox::ActionRole);
@@ -21,6 +26,10 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(clientProgressBar);
     mainLayout->addWidget(clientStatusLabel);
+    // mainLayout->addWidget(lineEdit);
+    mainLayout->addLayout(formLayout);
+    formLayout->addRow(hostLabel, lineEdit);
+    formLayout->addRow(portLabel, lineEdit2);
     mainLayout->addStretch(1);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(buttonBox);
@@ -43,7 +52,10 @@ void TcpFileSender::start()
     startButton->setEnabled(false);
     bytesWritten = 0;
     clientStatusLabel->setText(QStringLiteral("連接中..."));
-    tcpClient.connectToHost(QHostAddress("127.0.0.1"), 16998);
+    //tcpClient.connectToHost(QHostAddress("127.0.0.1"), 16998);
+    QString ip = lineEdit->text();
+    QString port = lineEdit2->text();
+    tcpClient.connectToHost(QHostAddress(ip), port.toInt());
 }
 void TcpFileSender::startTransfer()
 {
